@@ -1,0 +1,188 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Vehicle {
+    private String vehicleId;
+    private String model;
+    private String type;
+    private double price;
+
+    public Vehicle(String vehicleId, String model, String type, double price) {
+        this.vehicleId = vehicleId;
+        this.model = model;
+        this.type = type;
+        this.price = price;
+    }
+
+    public String getVehicleId() { return vehicleId; }
+    public String getModel() { return model; }
+    public String getType() { return type; }
+    public double getPrice() { return price; }
+
+
+    public String toString() {
+        return "Vehicle ID: " + vehicleId + ", Model: " + model + ", Type: " + type + ", Price: $" + price;
+    }
+}
+
+class InventoryItem {
+    private String partId;
+    private String partName;
+    private int quantity;
+
+    public InventoryItem(String partId, String partName, int quantity) {
+        this.partId = partId;
+        this.partName = partName;
+        this.quantity = quantity;
+    }
+
+    public String getPartId() { return partId; }
+    public String getPartName() { return partName; }
+    public int getQuantity() { return quantity; }
+
+    @Override
+    public String toString() {
+        return "Part ID: " + partId + ", Name: " + partName + ", Quantity: " + quantity;
+    }
+}
+
+// ServiceRecord Class
+class ServiceRecord {
+    private String serviceId;
+    private String vehicleId;
+    private String serviceDate;
+    private String description;
+
+    public ServiceRecord(String serviceId, String vehicleId, String serviceDate, String description) {
+        this.serviceId = serviceId;
+        this.vehicleId = vehicleId;
+        this.serviceDate = serviceDate;
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Service ID: " + serviceId + ", Vehicle ID: " + vehicleId + ", Date: " + serviceDate +
+                ", Description: " + description;
+    }
+}
+
+// Main Application Class
+public class AutomobileManagementSystem {
+    private static ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private static ArrayList<InventoryItem> inventory = new ArrayList<>();
+    private static ArrayList<ServiceRecord> serviceRecords = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("\n--- Automobile Management System ---");
+            System.out.println("1. Add Vehicle");
+            System.out.println("2. Display Vehicles");
+            System.out.println("3. Add Inventory Item");
+            System.out.println("4. Display Inventory");
+            System.out.println("5. Add Service Record");
+            System.out.println("6. Display Service Records");
+            System.out.println("7. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1 -> addVehicle();
+                case 2 -> displayVehicles();
+                case 3 -> addInventoryItem();
+                case 4 -> displayInventory();
+                case 5 -> addServiceRecord();
+                case 6 -> displayServiceRecords();
+                case 7 -> {
+                    System.out.println("Exiting the system. Goodbye!");
+                    return;
+                }
+                default -> System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    // Add a new vehicle
+    private static void addVehicle() {
+        System.out.print("Enter Vehicle ID: ");
+        String vehicleId = scanner.nextLine();
+        System.out.print("Enter Model: ");
+        String model = scanner.nextLine();
+        System.out.print("Enter Type: ");
+        String type = scanner.nextLine();
+        System.out.print("Enter Price: ");
+        double price = scanner.nextDouble();
+
+        Vehicle vehicle = new Vehicle(vehicleId, model, type, price);
+        vehicles.add(vehicle);
+        System.out.println("Vehicle added successfully!");
+    }
+
+    // Display all vehicles
+    private static void displayVehicles() {
+        if (vehicles.isEmpty()) {
+            System.out.println("No vehicles available.");
+        } else {
+            System.out.println("\nList of Vehicles:");
+            for (Vehicle vehicle : vehicles) {
+                System.out.println(vehicle);
+            }
+        }
+    }
+
+    // Add an inventory item
+    private static void addInventoryItem() {
+        System.out.print("Enter Part ID: ");
+        String partId = scanner.nextLine();
+        System.out.print("Enter Part Name: ");
+        String partName = scanner.nextLine();
+        System.out.print("Enter Quantity: ");
+        int quantity = scanner.nextInt();
+
+        InventoryItem item = new InventoryItem(partId, partName, quantity);
+        inventory.add(item);
+        System.out.println("Inventory item added successfully!");
+    }
+
+    // Display all inventory items
+    private static void displayInventory() {
+        if (inventory.isEmpty()) {
+            System.out.println("No inventory items available.");
+        } else {
+            System.out.println("\nInventory Items:");
+            for (InventoryItem item : inventory) {
+                System.out.println(item);
+            }
+        }
+    }
+
+    // Add a service record
+    private static void addServiceRecord() {
+        System.out.print("Enter Service ID: ");
+        String serviceId = scanner.nextLine();
+        System.out.print("Enter Vehicle ID: ");
+        String vehicleId = scanner.nextLine();
+        System.out.print("Enter Service Date (YYYY-MM-DD): ");
+        String serviceDate = scanner.nextLine();
+        System.out.print("Enter Description: ");
+        String description = scanner.nextLine();
+
+        ServiceRecord record = new ServiceRecord(serviceId, vehicleId, serviceDate, description);
+        serviceRecords.add(record);
+        System.out.println("Service record added successfully!");
+    }
+
+    // Display all service records
+    private static void displayServiceRecords() {
+        if (serviceRecords.isEmpty()) {
+            System.out.println("No service records available.");
+        } else {
+            System.out.println("\nService Records:");
+            for (ServiceRecord record : serviceRecords) {
+                System.out.println(record);
+            }
+        }
+    }
+}
